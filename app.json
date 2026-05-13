@@ -1,0 +1,884 @@
+{
+  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
+  "id": "net.ladenius.komga",
+  "version": "1.0.0",
+  "compatibility": ">=12.4.0",
+  "sdk": 3,
+  "runtime": "nodejs",
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "Komga"
+  },
+  "brandColor": "#005ed3",
+  "description": {
+    "en": "Automate your digital comic and manga collection."
+  },
+  "category": [
+    "video"
+  ],
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Jurjen Ladenius",
+    "email": "jurjen@ladenius.net"
+  },
+  "flow": {
+    "triggers": [
+      {
+        "id": "any_user_book_started",
+        "title": {
+          "en": "Any user started reading a book"
+        },
+        "tokens": [
+          {
+            "name": "title",
+            "type": "string",
+            "title": {
+              "en": "Book title"
+            }
+          },
+          {
+            "name": "series",
+            "type": "string",
+            "title": {
+              "en": "Series"
+            }
+          },
+          {
+            "name": "user",
+            "type": "string",
+            "title": {
+              "en": "User"
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=komga-server"
+          }
+        ]
+      },
+      {
+        "id": "any_user_book_finished",
+        "title": {
+          "en": "Any user finished reading a book"
+        },
+        "tokens": [
+          {
+            "name": "title",
+            "type": "string",
+            "title": {
+              "en": "Book title"
+            }
+          },
+          {
+            "name": "series",
+            "type": "string",
+            "title": {
+              "en": "Series"
+            }
+          },
+          {
+            "name": "user",
+            "type": "string",
+            "title": {
+              "en": "User"
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=komga-server"
+          }
+        ]
+      },
+      {
+        "id": "any_user_series_finished",
+        "title": {
+          "en": "Any user finished a complete series"
+        },
+        "tokens": [
+          {
+            "name": "series",
+            "type": "string",
+            "title": {
+              "en": "Series"
+            }
+          },
+          {
+            "name": "book_count",
+            "type": "number",
+            "title": {
+              "en": "Number of books"
+            }
+          },
+          {
+            "name": "user",
+            "type": "string",
+            "title": {
+              "en": "User"
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=komga-server"
+          }
+        ]
+      },
+      {
+        "id": "server_offline",
+        "title": {
+          "en": "Komga server went offline"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=komga-server"
+          }
+        ]
+      },
+      {
+        "id": "server_online",
+        "title": {
+          "en": "Komga server came back online"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=komga-server"
+          }
+        ]
+      },
+      {
+        "id": "book_added",
+        "title": {
+          "en": "Book added to library"
+        },
+        "tokens": [
+          {
+            "name": "title",
+            "type": "string",
+            "title": {
+              "en": "Title"
+            }
+          },
+          {
+            "name": "series",
+            "type": "string",
+            "title": {
+              "en": "Series"
+            }
+          },
+          {
+            "name": "library",
+            "type": "string",
+            "title": {
+              "en": "Library"
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=komga-server"
+          }
+        ]
+      },
+      {
+        "id": "series_added",
+        "title": {
+          "en": "Series added to library"
+        },
+        "tokens": [
+          {
+            "name": "title",
+            "type": "string",
+            "title": {
+              "en": "Title"
+            }
+          },
+          {
+            "name": "library",
+            "type": "string",
+            "title": {
+              "en": "Library"
+            }
+          },
+          {
+            "name": "book_count",
+            "type": "number",
+            "title": {
+              "en": "Number of books"
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=komga-server"
+          }
+        ]
+      },
+      {
+        "id": "book_started",
+        "title": {
+          "en": "Started reading a book"
+        },
+        "tokens": [
+          {
+            "name": "title",
+            "type": "string",
+            "title": {
+              "en": "Book title"
+            }
+          },
+          {
+            "name": "series",
+            "type": "string",
+            "title": {
+              "en": "Series"
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=komga-user"
+          }
+        ]
+      },
+      {
+        "id": "book_finished",
+        "title": {
+          "en": "Finished reading a book"
+        },
+        "tokens": [
+          {
+            "name": "title",
+            "type": "string",
+            "title": {
+              "en": "Book title"
+            }
+          },
+          {
+            "name": "series",
+            "type": "string",
+            "title": {
+              "en": "Series"
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=komga-user"
+          }
+        ]
+      },
+      {
+        "id": "series_finished",
+        "title": {
+          "en": "Finished reading a complete series"
+        },
+        "tokens": [
+          {
+            "name": "series",
+            "type": "string",
+            "title": {
+              "en": "Series"
+            }
+          },
+          {
+            "name": "book_count",
+            "type": "number",
+            "title": {
+              "en": "Number of books"
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=komga-user"
+          }
+        ]
+      }
+    ],
+    "conditions": [
+      {
+        "id": "komga_server_is_healthy",
+        "title": {
+          "en": "Komga server !{{is|is not}} online"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=komga-server"
+          }
+        ]
+      },
+      {
+        "id": "has_unread_books",
+        "title": {
+          "en": "User !{{has|has no}} unread books"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=komga-user"
+          }
+        ]
+      },
+      {
+        "id": "is_currently_reading",
+        "title": {
+          "en": "User !{{is|is not}} currently reading"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=komga-user"
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": "scan_library",
+        "title": {
+          "en": "Scan library"
+        },
+        "titleFormatted": {
+          "en": "Scan library [[library]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=komga-server"
+          },
+          {
+            "name": "library",
+            "type": "autocomplete",
+            "title": {
+              "en": "Library"
+            },
+            "placeholder": {
+              "en": "Select library…"
+            }
+          }
+        ]
+      },
+      {
+        "id": "scan_all_libraries",
+        "title": {
+          "en": "Scan all libraries"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=komga-server"
+          }
+        ]
+      }
+    ]
+  },
+  "drivers": [
+    {
+      "name": {
+        "en": "Komga Server"
+      },
+      "class": "other",
+      "brandColor": "#005ed3",
+      "images": {
+        "small": "/drivers/komga-server/assets/images/small.png",
+        "large": "/drivers/komga-server/assets/images/large.png"
+      },
+      "capabilities": [
+        "alarm_generic",
+        "komga_book_count",
+        "komga_series_count"
+      ],
+      "capabilitiesOptions": {
+        "alarm_generic": {
+          "title": {
+            "en": "Status"
+          },
+          "titleTrue": {
+            "en": "Komga is offline"
+          },
+          "titleFalse": {
+            "en": "Online"
+          },
+          "insightsTitleTrue": {
+            "en": "Komga went offline"
+          },
+          "insightsTitleFalse": {
+            "en": "Komga is online"
+          }
+        }
+      },
+      "pair": [
+        {
+          "id": "connect",
+          "navigation": {
+            "next": "list_devices"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "settings": [
+        {
+          "id": "host",
+          "type": "text",
+          "label": {
+            "en": "Host URL"
+          },
+          "value": ""
+        },
+        {
+          "id": "username",
+          "type": "text",
+          "label": {
+            "en": "Username"
+          },
+          "value": ""
+        },
+        {
+          "id": "password",
+          "type": "password",
+          "label": {
+            "en": "Password"
+          },
+          "value": ""
+        },
+        {
+          "id": "pollInterval",
+          "type": "number",
+          "label": {
+            "en": "Poll interval (seconds)"
+          },
+          "value": 60,
+          "min": 15,
+          "max": 3600
+        }
+      ],
+      "id": "komga-server"
+    },
+    {
+      "name": {
+        "en": "Komga User"
+      },
+      "class": "other",
+      "brandColor": "#005ed3",
+      "images": {
+        "small": "/drivers/komga-user/assets/images/small.png",
+        "large": "/drivers/komga-user/assets/images/large.png"
+      },
+      "capabilities": [
+        "komga_unread_count",
+        "komga_ondeck_count",
+        "komga_in_progress_count"
+      ],
+      "pair": [
+        {
+          "id": "connect",
+          "navigation": {
+            "next": "list_devices"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "settings": [
+        {
+          "id": "host",
+          "type": "text",
+          "label": {
+            "en": "Host URL"
+          },
+          "value": ""
+        },
+        {
+          "id": "username",
+          "type": "text",
+          "label": {
+            "en": "Username"
+          },
+          "value": ""
+        },
+        {
+          "id": "password",
+          "type": "password",
+          "label": {
+            "en": "Password"
+          },
+          "value": ""
+        },
+        {
+          "id": "pollInterval",
+          "type": "number",
+          "label": {
+            "en": "Poll interval (seconds)"
+          },
+          "value": 60,
+          "min": 15,
+          "max": 3600
+        }
+      ],
+      "id": "komga-user"
+    }
+  ],
+  "widgets": {
+    "komga-ondeck": {
+      "name": {
+        "en": "Komga On Deck"
+      },
+      "height": 1,
+      "devices": {
+        "type": "app",
+        "singular": true,
+        "filter": {
+          "capabilities": "komga_unread_count"
+        }
+      },
+      "settings": [
+        {
+          "id": "layout",
+          "type": "dropdown",
+          "label": {
+            "en": "Layout"
+          },
+          "value": "text",
+          "values": [
+            {
+              "id": "text",
+              "label": {
+                "en": "Text only"
+              }
+            },
+            {
+              "id": "thumbnail-text",
+              "label": {
+                "en": "Cover & text"
+              }
+            },
+            {
+              "id": "thumbnail",
+              "label": {
+                "en": "Covers only"
+              }
+            }
+          ]
+        },
+        {
+          "id": "showTitle",
+          "type": "checkbox",
+          "label": {
+            "en": "Show title"
+          },
+          "value": true
+        },
+        {
+          "id": "count",
+          "type": "number",
+          "label": {
+            "en": "Number of items"
+          },
+          "value": 5,
+          "min": 1,
+          "max": 20,
+          "step": 1
+        }
+      ],
+      "api": {
+        "getOnDeck": {
+          "method": "GET",
+          "path": "/"
+        }
+      },
+      "id": "komga-ondeck"
+    },
+    "komga-popular": {
+      "name": {
+        "en": "Komga Popular"
+      },
+      "height": 1,
+      "devices": {
+        "type": "app",
+        "singular": true,
+        "filter": {
+          "capabilities": "alarm_generic"
+        }
+      },
+      "settings": [
+        {
+          "id": "layout",
+          "type": "dropdown",
+          "label": {
+            "en": "Layout"
+          },
+          "value": "text",
+          "values": [
+            {
+              "id": "text",
+              "label": {
+                "en": "Text only"
+              }
+            },
+            {
+              "id": "thumbnail-text",
+              "label": {
+                "en": "Cover & text"
+              }
+            },
+            {
+              "id": "thumbnail",
+              "label": {
+                "en": "Covers only"
+              }
+            }
+          ]
+        },
+        {
+          "id": "showTitle",
+          "type": "checkbox",
+          "label": {
+            "en": "Show title"
+          },
+          "value": true
+        },
+        {
+          "id": "count",
+          "type": "number",
+          "label": {
+            "en": "Number of items"
+          },
+          "value": 5,
+          "min": 1,
+          "max": 20,
+          "step": 1
+        }
+      ],
+      "api": {
+        "getPopular": {
+          "method": "GET",
+          "path": "/"
+        }
+      },
+      "id": "komga-popular"
+    },
+    "komga-recent": {
+      "name": {
+        "en": "Komga Recent"
+      },
+      "height": 1,
+      "devices": {
+        "type": "app",
+        "singular": true,
+        "filter": {
+          "capabilities": "alarm_generic"
+        }
+      },
+      "settings": [
+        {
+          "id": "layout",
+          "type": "dropdown",
+          "label": {
+            "en": "Layout"
+          },
+          "value": "text",
+          "values": [
+            {
+              "id": "text",
+              "label": {
+                "en": "Text only"
+              }
+            },
+            {
+              "id": "thumbnail-text",
+              "label": {
+                "en": "Cover & text"
+              }
+            },
+            {
+              "id": "thumbnail",
+              "label": {
+                "en": "Covers only"
+              }
+            }
+          ]
+        },
+        {
+          "id": "groupBy",
+          "type": "dropdown",
+          "label": {
+            "en": "Group by"
+          },
+          "value": "none",
+          "values": [
+            {
+              "id": "none",
+              "label": {
+                "en": "No grouping"
+              }
+            },
+            {
+              "id": "week",
+              "label": {
+                "en": "Week"
+              }
+            },
+            {
+              "id": "month",
+              "label": {
+                "en": "Month"
+              }
+            }
+          ]
+        },
+        {
+          "id": "showTitle",
+          "type": "checkbox",
+          "label": {
+            "en": "Show title"
+          },
+          "value": true
+        },
+        {
+          "id": "count",
+          "type": "number",
+          "label": {
+            "en": "Number of items"
+          },
+          "value": 5,
+          "min": 1,
+          "max": 20,
+          "step": 1
+        }
+      ],
+      "api": {
+        "getRecent": {
+          "method": "GET",
+          "path": "/"
+        }
+      },
+      "id": "komga-recent"
+    }
+  },
+  "capabilities": {
+    "komga_book_count": {
+      "type": "number",
+      "title": {
+        "en": "Books"
+      },
+      "units": {
+        "en": "books"
+      },
+      "decimals": 0,
+      "min": 0,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor"
+    },
+    "komga_in_progress_count": {
+      "type": "number",
+      "title": {
+        "en": "Reading"
+      },
+      "units": {
+        "en": "books"
+      },
+      "decimals": 0,
+      "min": 0,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor"
+    },
+    "komga_ondeck_count": {
+      "type": "number",
+      "title": {
+        "en": "On Deck"
+      },
+      "units": {
+        "en": "books"
+      },
+      "decimals": 0,
+      "min": 0,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor"
+    },
+    "komga_series_count": {
+      "type": "number",
+      "title": {
+        "en": "Series"
+      },
+      "units": {
+        "en": "series"
+      },
+      "decimals": 0,
+      "min": 0,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor"
+    },
+    "komga_unread_count": {
+      "type": "number",
+      "title": {
+        "en": "Unread"
+      },
+      "units": {
+        "en": "books"
+      },
+      "decimals": 0,
+      "min": 0,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor"
+    }
+  }
+}

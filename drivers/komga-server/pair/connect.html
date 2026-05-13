@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 14px;
+      color: #1a1a1a;
+      background: #fff;
+      padding: 24px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 20px;
+      background: #005ed3;
+      border-radius: 50%;
+      padding: 16px;
+      color: #fff;
+    }
+
+    h2 { text-align: center; font-size: 18px; font-weight: 600; margin-bottom: 6px; }
+
+    .subtitle { text-align: center; color: #666; margin-bottom: 24px; font-size: 13px; }
+
+    label { display: block; font-weight: 500; margin-bottom: 4px; color: #333; }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.15s;
+      margin-bottom: 14px;
+    }
+
+    input:focus  { border-color: #005ed3; }
+    input.error  { border-color: #ef4444; }
+    input.success { border-color: #22c55e; }
+
+    .hint { font-size: 12px; color: #888; margin-top: -10px; margin-bottom: 14px; }
+
+    .status-box {
+      display: none;
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: 13px;
+      margin-bottom: 16px;
+      line-height: 1.4;
+    }
+    .status-box.error   { display: block; background: #fef2f2; border: 1px solid #fca5a5; color: #b91c1c; }
+    .status-box.success { display: block; background: #f0fdf4; border: 1px solid #86efac; color: #15803d; }
+
+    .actions { display: flex; gap: 10px; margin-top: 4px; }
+
+    button {
+      flex: 1;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      transition: opacity 0.15s, background 0.15s;
+    }
+    button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    #btn-test { background: #f3f4f6; color: #374151; border: 1px solid #d1d5db; }
+    #btn-test:not(:disabled):hover { background: #e5e7eb; }
+    #btn-next { background: #005ed3; color: #fff; }
+    #btn-next:not(:disabled):hover { background: #3451d1; }
+
+    .spinner {
+      display: inline-block;
+      width: 14px; height: 14px;
+      border: 2px solid currentColor;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="logo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+    </svg>
+  </div>
+  <h2 id="title"></h2>
+  <p class="subtitle" id="subtitle"></p>
+
+  <label for="host" id="label-host"></label>
+  <input id="host" type="text" autocomplete="off" spellcheck="false" />
+  <p class="hint" id="hint-host"></p>
+
+  <label for="username" id="label-username"></label>
+  <input id="username" type="text" autocomplete="off" spellcheck="false" />
+
+  <label for="password" id="label-password"></label>
+  <input id="password" type="password" autocomplete="off" />
+
+  <div id="status" class="status-box"></div>
+
+  <div class="actions">
+    <button id="btn-test" type="button"></button>
+    <button id="btn-next" type="button" disabled></button>
+  </div>
+
+  <script>
+    const hostInput     = document.getElementById('host');
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const statusBox     = document.getElementById('status');
+    const btnTest       = document.getElementById('btn-test');
+    const btnNext       = document.getElementById('btn-next');
+
+    document.getElementById('title').textContent         = Homey.__('pair.server.title');
+    document.getElementById('subtitle').textContent      = Homey.__('pair.server.subtitle');
+    document.getElementById('label-host').textContent    = Homey.__('pair.server.label_host');
+    document.getElementById('hint-host').textContent     = Homey.__('pair.server.hint_host');
+    document.getElementById('label-username').textContent = Homey.__('pair.server.label_username');
+    document.getElementById('label-password').textContent = Homey.__('pair.server.label_password');
+    hostInput.placeholder     = Homey.__('pair.server.placeholder_host');
+    usernameInput.placeholder = Homey.__('pair.server.placeholder_username');
+    passwordInput.placeholder = Homey.__('pair.server.placeholder_password');
+    btnTest.textContent = Homey.__('pair.server.btn_test');
+    btnNext.textContent = Homey.__('pair.server.btn_next');
+
+    function setStatus(type, message) {
+      statusBox.className   = 'status-box ' + type;
+      statusBox.textContent = message;
+    }
+
+    function clearStatus() {
+      statusBox.className   = 'status-box';
+      statusBox.textContent = '';
+    }
+
+    function setInputState(el, state) {
+      el.classList.remove('error', 'success');
+      if (state) el.classList.add(state);
+    }
+
+    function setLoading(loading) {
+      btnTest.disabled = loading;
+      btnTest.innerHTML = loading
+        ? '<span class="spinner"></span>' + Homey.__('pair.server.btn_testing')
+        : Homey.__('pair.server.btn_test');
+    }
+
+    async function testConnection() {
+      const host     = hostInput.value.trim();
+      const username = usernameInput.value.trim();
+      const password = passwordInput.value;
+
+      if (!host)     { setInputState(hostInput, 'error');     setStatus('error', Homey.__('pair.server.error_host_required'));     hostInput.focus();     return; }
+      if (!username) { setInputState(usernameInput, 'error'); setStatus('error', Homey.__('pair.server.error_username_required')); usernameInput.focus(); return; }
+      if (!password) { setInputState(passwordInput, 'error'); setStatus('error', Homey.__('pair.server.error_password_required')); passwordInput.focus(); return; }
+
+      clearStatus();
+      [hostInput, usernameInput, passwordInput].forEach((el) => setInputState(el, null));
+      btnNext.disabled = true;
+      setLoading(true);
+
+      try {
+        const result = await Homey.emit('test_connection', { host, username, password });
+        [hostInput, usernameInput, passwordInput].forEach((el) => setInputState(el, 'success'));
+        setStatus('success', Homey.__('pair.server.success_connected', { email: result.email }));
+        btnNext.disabled = false;
+      } catch (err) {
+        [hostInput, usernameInput, passwordInput].forEach((el) => setInputState(el, 'error'));
+        setStatus('error', err.message || Homey.__('pair.server.error_connection_failed'));
+        btnNext.disabled = true;
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    btnTest.addEventListener('click', testConnection);
+    btnNext.addEventListener('click', () => Homey.nextView());
+    passwordInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') testConnection(); });
+
+    function onInputChange() {
+      btnNext.disabled = true;
+      [hostInput, usernameInput, passwordInput].forEach((el) => setInputState(el, null));
+      clearStatus();
+    }
+    [hostInput, usernameInput, passwordInput].forEach((el) => el.addEventListener('input', onInputChange));
+  </script>
+</body>
+</html>

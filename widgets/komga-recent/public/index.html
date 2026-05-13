@@ -1,0 +1,222 @@
+<html>
+  <head>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html, body { background: transparent; }
+
+      #wrapper {
+        display: flex;
+        flex-direction: column;
+        padding: var(--homey-su-2);
+        gap: var(--homey-su-2);
+      }
+
+      .widget-title {
+        font-size: 11px; font-weight: 600; text-transform: uppercase;
+        letter-spacing: 0.5px; opacity: 0.5; flex-shrink: 0;
+      }
+
+      .list { display: flex; flex-direction: column; }
+
+      .day-header {
+        font-size: 10px; font-weight: 700; text-transform: uppercase;
+        letter-spacing: 0.6px; opacity: 0.4; padding: var(--homey-su-2) 0; flex-shrink: 0;
+      }
+      .day-header:first-child { padding-top: 0; }
+
+      .item {
+        display: flex; align-items: center; gap: var(--homey-su-2);
+        padding: var(--homey-su-2) 0;
+        border-bottom: 1px solid rgba(128,128,128,0.15); flex-shrink: 0;
+      }
+      .item:last-child { border-bottom: none; }
+
+      .thumb { display: none; flex-shrink: 0; }
+      .item-content { flex: 1; min-width: 0; }
+
+      .item-primary {
+        font-size: 13px; font-weight: 500; white-space: nowrap;
+        overflow: hidden; text-overflow: ellipsis; line-height: 1.3;
+      }
+      .item-secondary {
+        font-size: 11px; opacity: 0.55; white-space: nowrap;
+        overflow: hidden; text-overflow: ellipsis;
+        margin-top: var(--homey-su-1); line-height: 1.3;
+      }
+
+      .badge {
+        display: inline-block; font-size: 10px; font-weight: 600;
+        padding: 1px 5px; border-radius: 3px; margin-right: var(--homey-su-1);
+        background: var(--homey-color-brand-primary, #005ed3); color: #fff;
+        vertical-align: middle; line-height: 1.5;
+      }
+
+      .thumb-text .thumb {
+        display: block; width: 42px; height: 60px; object-fit: cover;
+        border-radius: 4px; background: rgba(128,128,128,0.15);
+      }
+
+      .thumb-only {
+        display: grid; grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+        gap: var(--homey-su-2); align-content: start;
+      }
+      .thumb-only .day-header { grid-column: 1 / -1; }
+      .thumb-only .item { flex-direction: column; align-items: stretch; padding: 0; border: none; gap: 0; }
+      .thumb-only .thumb { display: block; width: 100%; aspect-ratio: 2 / 3; object-fit: cover; border-radius: 4px; background: rgba(128,128,128,0.15); }
+      .thumb-only .item-content { display: none; }
+
+      .notice { font-size: 12px; opacity: 0.45; text-align: center; margin: auto; padding: var(--homey-su-4); }
+    </style>
+  </head>
+  <body class="homey-widget">
+    <div id="wrapper">
+      <div class="widget-title"></div>
+      <div id="list" class="list"></div>
+    </div>
+    <script type="text/javascript">
+      function onHomeyReady(Homey) {
+        Homey.ready();
+
+        let CACHE_KEY  = 'komga-recent-html';
+        let HEIGHT_KEY = 'komga-recent-height';
+
+        function esc(s) {
+          return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        }
+
+        function timeAgo(isoDate) {
+          if (!isoDate) return '';
+          const diff = Date.now() - new Date(isoDate).getTime();
+          const h = Math.floor(diff / 3600000);
+          if (h < 1)  return 'Just now';
+          if (h < 24) return `${h}h ago`;
+          const d = Math.floor(h / 24);
+          if (d < 7)  return `${d}d ago`;
+          return new Date(isoDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+        }
+
+        function weekStart(d) {
+          const day = new Date(d); day.setHours(0, 0, 0, 0);
+          day.setDate(day.getDate() - (day.getDay() + 6) % 7); // back to Monday
+          return day;
+        }
+
+        function groupKey(isoDate, groupBy) {
+          if (!isoDate) return '';
+          if (groupBy === 'week')  return weekStart(isoDate).toISOString().slice(0, 10);
+          if (groupBy === 'month') return isoDate.slice(0, 7);
+          return '';
+        }
+
+        function groupLabel(isoDate, groupBy) {
+          if (!isoDate) return '';
+          if (groupBy === 'week') {
+            const ws      = weekStart(isoDate);
+            const thisWs  = weekStart(new Date());
+            const diffMs  = thisWs.getTime() - ws.getTime();
+            const weeks   = Math.round(diffMs / (7 * 86400000));
+            if (weeks === 0) return 'This week';
+            if (weeks === 1) return 'Last week';
+            if (weeks < 5)  return `${weeks} weeks ago`;
+            const end = new Date(ws.getTime() + 6 * 86400000);
+            const fmt = { month: 'short', day: 'numeric' };
+            return ws.toLocaleDateString(undefined, fmt) + ' – ' + end.toLocaleDateString(undefined, fmt);
+          }
+          if (groupBy === 'month') {
+            return new Date(isoDate).toLocaleDateString(undefined, { month: 'long', year: 'numeric' });
+          }
+          return '';
+        }
+
+        function applyHeight() {
+          const h = Math.ceil(document.getElementById('wrapper').getBoundingClientRect().bottom);
+          localStorage.setItem(HEIGHT_KEY, h);
+          Homey.setHeight(h);
+        }
+
+        function notice(msg) {
+          document.getElementById('list').innerHTML = `<div class="notice">${msg}</div>`;
+          applyHeight();
+        }
+
+        async function render() {
+          const s       = Homey.getSettings();
+          const layout  = s.layout  || 'text';
+          const groupBy = s.groupBy || 'none';
+          const doGroup = groupBy !== 'none';
+
+          document.querySelector('.widget-title').textContent    = Homey.__('widgets.komga_recent.title');
+          document.querySelector('.widget-title').style.display  = s.showTitle === false ? 'none' : '';
+
+          const list = document.getElementById('list');
+          list.className = 'list'
+            + (layout === 'thumbnail-text' ? ' thumb-text' : '')
+            + (layout === 'thumbnail'      ? ' thumb-only' : '');
+
+          if (!list.innerHTML) {
+            const cached = localStorage.getItem(CACHE_KEY);
+            if (cached) { list.innerHTML = cached; applyHeight(); }
+          }
+
+          try {
+            const deviceIds = Homey.getDeviceIds();
+            const deviceId  = deviceIds.length ? deviceIds[0] : '';
+
+            CACHE_KEY  = `komga-recent-html-${deviceId}`;
+            HEIGHT_KEY = `komga-recent-height-${deviceId}`;
+
+            const items = await Homey.api('GET', `/?count=${s.count||5}&deviceId=${encodeURIComponent(deviceId)}`, null);
+
+            if (!Array.isArray(items) || !items.length) {
+              notice(Homey.__('widgets.komga_recent.no_items'));
+              return;
+            }
+
+            let html    = '';
+            let lastKey = null;
+
+            for (const item of items) {
+              const key = groupKey(item.date, groupBy);
+              if (doGroup && key && key !== lastKey) {
+                html += `<div class="day-header">${esc(groupLabel(item.date, groupBy))}</div>`;
+                lastKey = key;
+              }
+
+              const badge = item.badge ? `<span class="badge">${esc(item.badge)}</span>` : '';
+              const thumb = item.posterUrl
+                ? `<img class="thumb" src="${esc(item.posterUrl)}" alt="" loading="lazy">`
+                : `<div class="thumb"></div>`;
+
+              const secondary = [
+                esc(item.subtitle),
+                doGroup ? '' : esc(timeAgo(item.date)),
+              ].filter(Boolean).join(' &middot; ');
+
+              html += `
+                <div class="item">
+                  ${thumb}
+                  <div class="item-content">
+                    <div class="item-primary">${badge}${esc(item.title)}</div>
+                    ${secondary ? `<div class="item-secondary">${secondary}</div>` : ''}
+                  </div>
+                </div>`;
+            }
+
+            list.innerHTML = html;
+            localStorage.setItem(CACHE_KEY, html);
+            applyHeight();
+          } catch (err) {
+            notice(esc(err.message || String(err)));
+          }
+        }
+
+        const savedH = parseInt(localStorage.getItem(HEIGHT_KEY), 10) || 0;
+        if (savedH) Homey.setHeight(savedH);
+
+        Homey.on('settings.set', render);
+        render();
+        setInterval(render, 60 * 1000);
+      }
+    </script>
+  </body>
+</html>

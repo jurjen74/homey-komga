@@ -1,0 +1,39 @@
+{
+  "triggers": [
+    {
+      "id": "book_started",
+      "title": { "en": "Started reading a book" },
+      "tokens": [
+        { "name": "title",  "type": "string", "title": { "en": "Book title" } },
+        { "name": "series", "type": "string", "title": { "en": "Series" } }
+      ]
+    },
+    {
+      "id": "book_finished",
+      "title": { "en": "Finished reading a book" },
+      "tokens": [
+        { "name": "title",  "type": "string", "title": { "en": "Book title" } },
+        { "name": "series", "type": "string", "title": { "en": "Series" } }
+      ]
+    },
+    {
+      "id": "series_finished",
+      "title": { "en": "Finished reading a complete series" },
+      "tokens": [
+        { "name": "series",     "type": "string", "title": { "en": "Series" } },
+        { "name": "book_count", "type": "number", "title": { "en": "Number of books" } }
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "id": "has_unread_books",
+      "title": { "en": "User !{{has|has no}} unread books" }
+    },
+    {
+      "id": "is_currently_reading",
+      "title": { "en": "User !{{is|is not}} currently reading" }
+    }
+  ],
+  "actions": []
+}

@@ -1,0 +1,43 @@
+{
+  "name": { "en": "Komga On Deck" },
+  "height": 1,
+  "devices": {
+    "type": "app",
+    "singular": true,
+    "filter": { "capabilities": "komga_unread_count" }
+  },
+  "settings": [
+    {
+      "id": "layout",
+      "type": "dropdown",
+      "label": { "en": "Layout" },
+      "value": "text",
+      "values": [
+        { "id": "text",           "label": { "en": "Text only" } },
+        { "id": "thumbnail-text", "label": { "en": "Cover & text" } },
+        { "id": "thumbnail",      "label": { "en": "Covers only" } }
+      ]
+    },
+    {
+      "id": "showTitle",
+      "type": "checkbox",
+      "label": { "en": "Show title" },
+      "value": true
+    },
+    {
+      "id": "count",
+      "type": "number",
+      "label": { "en": "Number of items" },
+      "value": 5,
+      "min": 1,
+      "max": 20,
+      "step": 1
+    }
+  ],
+  "api": {
+    "getOnDeck": {
+      "method": "GET",
+      "path": "/"
+    }
+  }
+}

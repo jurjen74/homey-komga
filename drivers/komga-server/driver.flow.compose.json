@@ -1,0 +1,82 @@
+{
+  "triggers": [
+    {
+      "id": "any_user_book_started",
+      "title": { "en": "Any user started reading a book" },
+      "tokens": [
+        { "name": "title",  "type": "string", "title": { "en": "Book title" } },
+        { "name": "series", "type": "string", "title": { "en": "Series" } },
+        { "name": "user",   "type": "string", "title": { "en": "User" } }
+      ]
+    },
+    {
+      "id": "any_user_book_finished",
+      "title": { "en": "Any user finished reading a book" },
+      "tokens": [
+        { "name": "title",  "type": "string", "title": { "en": "Book title" } },
+        { "name": "series", "type": "string", "title": { "en": "Series" } },
+        { "name": "user",   "type": "string", "title": { "en": "User" } }
+      ]
+    },
+    {
+      "id": "any_user_series_finished",
+      "title": { "en": "Any user finished a complete series" },
+      "tokens": [
+        { "name": "series",     "type": "string", "title": { "en": "Series" } },
+        { "name": "book_count", "type": "number", "title": { "en": "Number of books" } },
+        { "name": "user",       "type": "string", "title": { "en": "User" } }
+      ]
+    },
+    {
+      "id": "server_offline",
+      "title": { "en": "Komga server went offline" }
+    },
+    {
+      "id": "server_online",
+      "title": { "en": "Komga server came back online" }
+    },
+    {
+      "id": "book_added",
+      "title": { "en": "Book added to library" },
+      "tokens": [
+        { "name": "title",   "type": "string", "title": { "en": "Title" } },
+        { "name": "series",  "type": "string", "title": { "en": "Series" } },
+        { "name": "library", "type": "string", "title": { "en": "Library" } }
+      ]
+    },
+    {
+      "id": "series_added",
+      "title": { "en": "Series added to library" },
+      "tokens": [
+        { "name": "title",      "type": "string", "title": { "en": "Title" } },
+        { "name": "library",    "type": "string", "title": { "en": "Library" } },
+        { "name": "book_count", "type": "number", "title": { "en": "Number of books" } }
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "id": "komga_server_is_healthy",
+      "title": { "en": "Komga server !{{is|is not}} online" }
+    }
+  ],
+  "actions": [
+    {
+      "id": "scan_library",
+      "title":          { "en": "Scan library" },
+      "titleFormatted": { "en": "Scan library [[library]]" },
+      "args": [
+        {
+          "name": "library",
+          "type": "autocomplete",
+          "title":       { "en": "Library" },
+          "placeholder": { "en": "Select library…" }
+        }
+      ]
+    },
+    {
+      "id": "scan_all_libraries",
+      "title": { "en": "Scan all libraries" }
+    }
+  ]
+}

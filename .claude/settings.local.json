@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem \"C:\\\\repos\\\\net.ladenius.komga\" | Where-Object { $_.Name -ne \"node_modules\" } | ForEach-Object { \"$\\($_.PSIsContainer ? 'DIR' : 'FILE'\\) $\\($_.Name\\)\" })",
+      "PowerShell(Get-ChildItem \"C:\\\\repos\\\\net.ladenius.komga\\\\.homeycompose\" -Recurse | Where-Object { -not $_.PSIsContainer } | ForEach-Object { $_.FullName.Replace\\(\"C:\\\\repos\\\\net.ladenius.komga\\\\\", \"\"\\) })",
+      "PowerShell(Get-ChildItem \"C:\\\\repos\\\\net.ladenius.komga\\\\drivers\" -Recurse | Where-Object { -not $_.PSIsContainer } | ForEach-Object { $_.FullName.Replace\\(\"C:\\\\repos\\\\net.ladenius.komga\\\\\", \"\"\\) })",
+      "PowerShell(Get-ChildItem \"C:\\\\repos\\\\net.ladenius.komga\\\\locales\" -Recurse | Where-Object { -not $_.PSIsContainer } | ForEach-Object { $_.FullName.Replace\\(\"C:\\\\repos\\\\net.ladenius.komga\\\\\", \"\"\\) })",
+      "PowerShell(Get-ChildItem \"C:\\\\repos\\\\net.ladenius.komga\\\\.claude\" -Recurse | Where-Object { -not $_.PSIsContainer } | ForEach-Object { $_.FullName.Replace\\(\"C:\\\\repos\\\\net.ladenius.komga\\\\\", \"\"\\) })",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\repos\\\\net.ladenius.sonarr\" -Recurse -Force -ErrorAction SilentlyContinue | Where-Object { $_.FullName -notmatch 'node_modules' } | Select-Object FullName | Sort-Object FullName)",
+      "WebFetch(domain:komga.org)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "PowerShell(Get-ChildItem \"C:\\\\repos\\\\net.ladenius.sonarr\\\\.homeycompose\\\\capabilities\" | ForEach-Object { $_.Name })",
+      "PowerShell($json = Get-Content \"C:\\\\repos\\\\net.ladenius.sonarr\\\\app.json\" -Raw | ConvertFrom-Json; $json.widgets | ConvertTo-Json -Depth 10)",
+      "PowerShell(Get-ChildItem \"C:\\\\repos\\\\net.ladenius.sonarr\\\\drivers\\\\sonarr\" -Recurse | Where-Object { -not $_.PSIsContainer } | ForEach-Object { $_.FullName.Replace\\(\"C:\\\\repos\\\\net.ladenius.sonarr\\\\\", \"\"\\) })",
+      "PowerShell(Get-ChildItem \"C:\\\\repos\\\\net.ladenius.sonarr\\\\widgets\" -Recurse | Where-Object { -not $_.PSIsContainer } | ForEach-Object { $_.FullName.Replace\\(\"C:\\\\repos\\\\net.ladenius.sonarr\\\\\", \"\"\\) })",
+      "Bash(homey app *)",
+      "WebFetch(domain:192.168.2.99)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:comics.13thpenthouse.com)",
+      "PowerShell(Get-Command *)",
+      "WebFetch(domain:apps.developer.homey.app)"
+    ]
+  }
+}

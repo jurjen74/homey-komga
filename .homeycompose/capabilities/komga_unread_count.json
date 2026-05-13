@@ -1,0 +1,10 @@
+{
+  "type": "number",
+  "title": { "en": "Unread" },
+  "units": { "en": "books" },
+  "decimals": 0,
+  "min": 0,
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor"
+}

@@ -1,0 +1,54 @@
+{
+  "name": { "en": "Komga Recent" },
+  "height": 1,
+  "devices": {
+    "type": "app",
+    "singular": true,
+    "filter": { "capabilities": "alarm_generic" }
+  },
+  "settings": [
+    {
+      "id": "layout",
+      "type": "dropdown",
+      "label": { "en": "Layout" },
+      "value": "text",
+      "values": [
+        { "id": "text",           "label": { "en": "Text only" } },
+        { "id": "thumbnail-text", "label": { "en": "Cover & text" } },
+        { "id": "thumbnail",      "label": { "en": "Covers only" } }
+      ]
+    },
+    {
+      "id": "groupBy",
+      "type": "dropdown",
+      "label": { "en": "Group by" },
+      "value": "none",
+      "values": [
+        { "id": "none",  "label": { "en": "No grouping" } },
+        { "id": "week",  "label": { "en": "Week" } },
+        { "id": "month", "label": { "en": "Month" } }
+      ]
+    },
+    {
+      "id": "showTitle",
+      "type": "checkbox",
+      "label": { "en": "Show title" },
+      "value": true
+    },
+    {
+      "id": "count",
+      "type": "number",
+      "label": { "en": "Number of items" },
+      "value": 5,
+      "min": 1,
+      "max": 20,
+      "step": 1
+    }
+  ],
+  "api": {
+    "getRecent": {
+      "method": "GET",
+      "path": "/"
+    }
+  }
+}

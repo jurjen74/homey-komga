@@ -1,0 +1,26 @@
+{
+  "id": "net.ladenius.komga",
+  "version": "1.0.0",
+  "compatibility": ">=12.4.0",
+  "sdk": 3,
+  "runtime": "nodejs",
+  "platforms": ["local"],
+  "name": {
+    "en": "Komga"
+  },
+  "brandColor": "#005ed3",
+  "description": {
+    "en": "Automate your digital comic and manga collection."
+  },
+  "category": ["video"],
+  "permissions": [],
+  "images": {
+    "small":  "/assets/images/small.png",
+    "large":  "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name":  "Jurjen Ladenius",
+    "email": "jurjen@ladenius.net"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "widgets": {
+    "komga_recent": {
+      "title": "Recently Added",
+      "no_items": "No recent additions"
+    },
+    "komga_ondeck": {
+      "title": "On Deck",
+      "no_items": "Nothing on deck"
+    },
+    "komga_popular": {
+      "title": "Popular with Others",
+      "no_items": "No reading activity yet"
+    }
+  },
+  "pair": {
+    "server": {
+      "title": "Connect to Komga",
+      "subtitle": "Enter your Komga server details to continue",
+      "label_host": "Host URL",
+      "placeholder_host": "http://192.168.1.10:25600",
+      "hint_host": "Include the port — Komga defaults to 25600",
+      "label_username": "Username",
+      "placeholder_username": "admin@komga.org",
+      "label_password": "Password",
+      "placeholder_password": "Your Komga password",
+      "btn_test": "Test connection",
+      "btn_testing": "Testing…",
+      "btn_next": "Next",
+      "error_host_required": "Host URL is required",
+      "error_username_required": "Username is required",
+      "error_password_required": "Password is required",
+      "error_connection_failed": "Connection failed",
+      "success_connected": "Connected to Komga as __email__"
+    },
+    "user": {
+      "title": "Add Komga User",
+      "subtitle": "Enter user credentials to track reading activity",
+      "label_host": "Host URL",
+      "placeholder_host": "http://192.168.1.10:25600",
+      "hint_host": "Same host as your Komga Server device",
+      "label_username": "Username",
+      "placeholder_username": "user@komga.org",
+      "label_password": "Password",
+      "placeholder_password": "User's Komga password",
+      "btn_test": "Test connection",
+      "btn_testing": "Testing…",
+      "btn_next": "Next",
+      "error_host_required": "Host URL is required",
+      "error_username_required": "Username is required",
+      "error_password_required": "Password is required",
+      "error_connection_failed": "Connection failed",
+      "success_connected": "Connected as __email__"
+    }
+  }
+}

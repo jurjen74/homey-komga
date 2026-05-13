@@ -1,0 +1,34 @@
+{
+  "name": { "en": "Komga Server" },
+  "class": "other",
+  "brandColor": "#005ed3",
+  "images": {
+    "small": "/drivers/komga-server/assets/images/small.png",
+    "large": "/drivers/komga-server/assets/images/large.png"
+  },
+  "capabilities": [
+    "alarm_generic",
+    "komga_book_count",
+    "komga_series_count"
+  ],
+  "capabilitiesOptions": {
+    "alarm_generic": {
+      "title":              { "en": "Status" },
+      "titleTrue":          { "en": "Komga is offline" },
+      "titleFalse":         { "en": "Online" },
+      "insightsTitleTrue":  { "en": "Komga went offline" },
+      "insightsTitleFalse": { "en": "Komga is online" }
+    }
+  },
+  "pair": [
+    { "id": "connect",      "navigation": { "next": "list_devices" } },
+    { "id": "list_devices", "template": "list_devices", "navigation": { "next": "add_devices" } },
+    { "id": "add_devices",  "template": "add_devices" }
+  ],
+  "settings": [
+    { "id": "host",         "type": "text",     "label": { "en": "Host URL" },               "value": "" },
+    { "id": "username",     "type": "text",     "label": { "en": "Username" },               "value": "" },
+    { "id": "password",     "type": "password", "label": { "en": "Password" },               "value": "" },
+    { "id": "pollInterval", "type": "number",   "label": { "en": "Poll interval (seconds)" }, "value": 60, "min": 15, "max": 3600 }
+  ]
+}
