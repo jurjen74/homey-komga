@@ -74,5 +74,5 @@ Several v1 endpoints are deprecated — use these instead:
 
 - All image assets (driver, app-level, widget previews) are placeholder solid-color PNGs — replace with proper artwork before App Store submission.
   - App: `assets/images/small.png` (250×175), `large.png` (500×350), `xlarge.png` (1000×700)
-  - Drivers: `assets/images/small.png` (75×75), `large.png` (500×500) for both `komga-server` and `komga-user`
+  - Drivers: `assets/images/small.png` (75×75), `large.png` (500×500), `xlarge.png` (1000×1000) for both `komga-server` and `komga-user`
   - Widgets: `preview-light.png` and `preview-dark.png` (512×256) per widget directory
