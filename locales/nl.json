@@ -1,0 +1,56 @@
+{
+  "widgets": {
+    "komga_recent": {
+      "title": "Onlangs toegevoegd",
+      "no_items": "Geen recente toevoegingen"
+    },
+    "komga_ondeck": {
+      "title": "Verder lezen",
+      "no_items": "Niets om verder te lezen"
+    },
+    "komga_popular": {
+      "title": "Populair bij anderen",
+      "no_items": "Nog geen leesactiviteit"
+    }
+  },
+  "pair": {
+    "server": {
+      "title": "Verbinden met Komga",
+      "subtitle": "Voer de gegevens van je Komga-server in om door te gaan",
+      "label_host": "Host-URL",
+      "placeholder_host": "http://192.168.1.10:25600",
+      "hint_host": "Inclusief poort — Komga gebruikt standaard 25600",
+      "label_username": "Gebruikersnaam",
+      "placeholder_username": "admin@komga.org",
+      "label_password": "Wachtwoord",
+      "placeholder_password": "Je Komga-wachtwoord",
+      "btn_test": "Verbinding testen",
+      "btn_testing": "Testen…",
+      "btn_next": "Volgende",
+      "error_host_required": "Host-URL is vereist",
+      "error_username_required": "Gebruikersnaam is vereist",
+      "error_password_required": "Wachtwoord is vereist",
+      "error_connection_failed": "Verbinding mislukt",
+      "success_connected": "Verbonden met Komga als __email__"
+    },
+    "user": {
+      "title": "Komga-gebruiker toevoegen",
+      "subtitle": "Voer gebruikersgegevens in om leesactiviteit bij te houden",
+      "label_host": "Host-URL",
+      "placeholder_host": "http://192.168.1.10:25600",
+      "hint_host": "Zelfde host als je Komga-serverapparaat",
+      "label_username": "Gebruikersnaam",
+      "placeholder_username": "gebruiker@komga.org",
+      "label_password": "Wachtwoord",
+      "placeholder_password": "Wachtwoord van de gebruiker",
+      "btn_test": "Verbinding testen",
+      "btn_testing": "Testen…",
+      "btn_next": "Volgende",
+      "error_host_required": "Host-URL is vereist",
+      "error_username_required": "Gebruikersnaam is vereist",
+      "error_password_required": "Wachtwoord is vereist",
+      "error_connection_failed": "Verbinding mislukt",
+      "success_connected": "Verbonden als __email__"
+    }
+  }
+}

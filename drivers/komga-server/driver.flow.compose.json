@@ -2,81 +2,117 @@
   "triggers": [
     {
       "id": "any_user_book_started",
-      "title": { "en": "Any user started reading a book" },
+      "title": {
+        "en": "Any user started reading a book",
+        "nl": "Een gebruiker is een boek gaan lezen",
+        "de": "Ein Benutzer hat angefangen, ein Buch zu lesen"
+      },
       "tokens": [
-        { "name": "title",  "type": "string", "title": { "en": "Book title" } },
-        { "name": "series", "type": "string", "title": { "en": "Series" } },
-        { "name": "user",   "type": "string", "title": { "en": "User" } }
+        { "name": "title",  "type": "string", "title": { "en": "Book title", "nl": "Boektitel",    "de": "Buchtitel" } },
+        { "name": "series", "type": "string", "title": { "en": "Series",     "nl": "Serie",        "de": "Serie" } },
+        { "name": "user",   "type": "string", "title": { "en": "User",       "nl": "Gebruiker",    "de": "Benutzer" } }
       ]
     },
     {
       "id": "any_user_book_finished",
-      "title": { "en": "Any user finished reading a book" },
+      "title": {
+        "en": "Any user finished reading a book",
+        "nl": "Een gebruiker heeft een boek uitgelezen",
+        "de": "Ein Benutzer hat ein Buch fertig gelesen"
+      },
       "tokens": [
-        { "name": "title",  "type": "string", "title": { "en": "Book title" } },
-        { "name": "series", "type": "string", "title": { "en": "Series" } },
-        { "name": "user",   "type": "string", "title": { "en": "User" } }
+        { "name": "title",  "type": "string", "title": { "en": "Book title", "nl": "Boektitel",    "de": "Buchtitel" } },
+        { "name": "series", "type": "string", "title": { "en": "Series",     "nl": "Serie",        "de": "Serie" } },
+        { "name": "user",   "type": "string", "title": { "en": "User",       "nl": "Gebruiker",    "de": "Benutzer" } }
       ]
     },
     {
       "id": "any_user_series_finished",
-      "title": { "en": "Any user finished a complete series" },
+      "title": {
+        "en": "Any user finished a complete series",
+        "nl": "Een gebruiker heeft een volledige serie uitgelezen",
+        "de": "Ein Benutzer hat eine komplette Serie fertig gelesen"
+      },
       "tokens": [
-        { "name": "series",     "type": "string", "title": { "en": "Series" } },
-        { "name": "book_count", "type": "number", "title": { "en": "Number of books" } },
-        { "name": "user",       "type": "string", "title": { "en": "User" } }
+        { "name": "series",     "type": "string", "title": { "en": "Series",          "nl": "Serie",         "de": "Serie" } },
+        { "name": "book_count", "type": "number", "title": { "en": "Number of books", "nl": "Aantal boeken", "de": "Anzahl der Bücher" } },
+        { "name": "user",       "type": "string", "title": { "en": "User",            "nl": "Gebruiker",     "de": "Benutzer" } }
       ]
     },
     {
       "id": "server_offline",
-      "title": { "en": "Komga server went offline" }
+      "title": {
+        "en": "Komga server went offline",
+        "nl": "Komga-server is offline gegaan",
+        "de": "Komga-Server ist offline gegangen"
+      }
     },
     {
       "id": "server_online",
-      "title": { "en": "Komga server came back online" }
+      "title": {
+        "en": "Komga server came back online",
+        "nl": "Komga-server is weer online",
+        "de": "Komga-Server ist wieder online"
+      }
     },
     {
       "id": "book_added",
-      "title": { "en": "Book added to library" },
+      "title": {
+        "en": "Book added to library",
+        "nl": "Boek toegevoegd aan bibliotheek",
+        "de": "Buch zur Bibliothek hinzugefügt"
+      },
       "tokens": [
-        { "name": "title",   "type": "string", "title": { "en": "Title" } },
-        { "name": "series",  "type": "string", "title": { "en": "Series" } },
-        { "name": "library", "type": "string", "title": { "en": "Library" } }
+        { "name": "title",   "type": "string", "title": { "en": "Title",   "nl": "Titel",       "de": "Titel" } },
+        { "name": "series",  "type": "string", "title": { "en": "Series",  "nl": "Serie",       "de": "Serie" } },
+        { "name": "library", "type": "string", "title": { "en": "Library", "nl": "Bibliotheek", "de": "Bibliothek" } }
       ]
     },
     {
       "id": "series_added",
-      "title": { "en": "Series added to library" },
+      "title": {
+        "en": "Series added to library",
+        "nl": "Serie toegevoegd aan bibliotheek",
+        "de": "Serie zur Bibliothek hinzugefügt"
+      },
       "tokens": [
-        { "name": "title",      "type": "string", "title": { "en": "Title" } },
-        { "name": "library",    "type": "string", "title": { "en": "Library" } },
-        { "name": "book_count", "type": "number", "title": { "en": "Number of books" } }
+        { "name": "title",      "type": "string", "title": { "en": "Title",           "nl": "Titel",         "de": "Titel" } },
+        { "name": "library",    "type": "string", "title": { "en": "Library",         "nl": "Bibliotheek",   "de": "Bibliothek" } },
+        { "name": "book_count", "type": "number", "title": { "en": "Number of books", "nl": "Aantal boeken", "de": "Anzahl der Bücher" } }
       ]
     }
   ],
   "conditions": [
     {
       "id": "komga_server_is_healthy",
-      "title": { "en": "Komga server !{{is|is not}} online" }
+      "title": {
+        "en": "Komga server !{{is|is not}} online",
+        "nl": "Komga-server !{{is|is niet}} online",
+        "de": "Komga-Server !{{ist online|ist nicht online}}"
+      }
     }
   ],
   "actions": [
     {
       "id": "scan_library",
-      "title":          { "en": "Scan library" },
-      "titleFormatted": { "en": "Scan library [[library]]" },
+      "title":          { "en": "Scan library",          "nl": "Bibliotheek scannen",          "de": "Bibliothek scannen" },
+      "titleFormatted": { "en": "Scan library [[library]]", "nl": "Bibliotheek [[library]] scannen", "de": "Bibliothek [[library]] scannen" },
       "args": [
         {
           "name": "library",
           "type": "autocomplete",
-          "title":       { "en": "Library" },
-          "placeholder": { "en": "Select library…" }
+          "title":       { "en": "Library",          "nl": "Bibliotheek",          "de": "Bibliothek" },
+          "placeholder": { "en": "Select library…",  "nl": "Selecteer bibliotheek…", "de": "Bibliothek auswählen…" }
         }
       ]
     },
     {
       "id": "scan_all_libraries",
-      "title": { "en": "Scan all libraries" }
+      "title": {
+        "en": "Scan all libraries",
+        "nl": "Alle bibliotheken scannen",
+        "de": "Alle Bibliotheken scannen"
+      }
     }
   ]
 }

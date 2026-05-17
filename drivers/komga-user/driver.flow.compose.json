@@ -2,37 +2,57 @@
   "triggers": [
     {
       "id": "book_started",
-      "title": { "en": "Started reading a book" },
+      "title": {
+        "en": "Started reading a book",
+        "nl": "Begonnen met een boek lezen",
+        "de": "Hat angefangen, ein Buch zu lesen"
+      },
       "tokens": [
-        { "name": "title",  "type": "string", "title": { "en": "Book title" } },
-        { "name": "series", "type": "string", "title": { "en": "Series" } }
+        { "name": "title",  "type": "string", "title": { "en": "Book title", "nl": "Boektitel", "de": "Buchtitel" } },
+        { "name": "series", "type": "string", "title": { "en": "Series",     "nl": "Serie",     "de": "Serie" } }
       ]
     },
     {
       "id": "book_finished",
-      "title": { "en": "Finished reading a book" },
+      "title": {
+        "en": "Finished reading a book",
+        "nl": "Klaar met een boek lezen",
+        "de": "Hat ein Buch fertig gelesen"
+      },
       "tokens": [
-        { "name": "title",  "type": "string", "title": { "en": "Book title" } },
-        { "name": "series", "type": "string", "title": { "en": "Series" } }
+        { "name": "title",  "type": "string", "title": { "en": "Book title", "nl": "Boektitel", "de": "Buchtitel" } },
+        { "name": "series", "type": "string", "title": { "en": "Series",     "nl": "Serie",     "de": "Serie" } }
       ]
     },
     {
       "id": "series_finished",
-      "title": { "en": "Finished reading a complete series" },
+      "title": {
+        "en": "Finished reading a complete series",
+        "nl": "Een volledige serie uitgelezen",
+        "de": "Eine komplette Serie fertig gelesen"
+      },
       "tokens": [
-        { "name": "series",     "type": "string", "title": { "en": "Series" } },
-        { "name": "book_count", "type": "number", "title": { "en": "Number of books" } }
+        { "name": "series",     "type": "string", "title": { "en": "Series",          "nl": "Serie",         "de": "Serie" } },
+        { "name": "book_count", "type": "number", "title": { "en": "Number of books", "nl": "Aantal boeken", "de": "Anzahl der Bücher" } }
       ]
     }
   ],
   "conditions": [
     {
       "id": "has_unread_books",
-      "title": { "en": "User !{{has|has no}} unread books" }
+      "title": {
+        "en": "User !{{has|has no}} unread books",
+        "nl": "Gebruiker !{{heeft|heeft geen}} ongelezen boeken",
+        "de": "Benutzer hat !{{ungelesene Bücher|keine ungelesenen Bücher}}"
+      }
     },
     {
       "id": "is_currently_reading",
-      "title": { "en": "User !{{is|is not}} currently reading" }
+      "title": {
+        "en": "User !{{is|is not}} currently reading",
+        "nl": "Gebruiker !{{leest momenteel|leest momenteel niet}}",
+        "de": "Benutzer !{{liest gerade|liest gerade nicht}}"
+      }
     }
   ],
   "actions": []

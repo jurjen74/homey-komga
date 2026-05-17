@@ -1,7 +1,7 @@
 {
   "type": "number",
-  "title": { "en": "Reading" },
-  "units": { "en": "books" },
+  "title": { "en": "Reading", "nl": "Aan het lezen", "de": "Am Lesen" },
+  "units": { "en": "books", "nl": "boeken", "de": "Bücher" },
   "decimals": 0,
   "min": 0,
   "getable": true,

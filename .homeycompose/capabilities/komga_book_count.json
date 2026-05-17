@@ -1,7 +1,7 @@
 {
   "type": "number",
-  "title": { "en": "Books" },
-  "units": { "en": "books" },
+  "title": { "en": "Books", "nl": "Boeken", "de": "Bücher" },
+  "units": { "en": "books", "nl": "boeken", "de": "Bücher" },
   "decimals": 0,
   "min": 0,
   "getable": true,

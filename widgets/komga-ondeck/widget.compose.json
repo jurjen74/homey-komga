@@ -1,5 +1,5 @@
 {
-  "name": { "en": "Komga On Deck" },
+  "name": { "en": "Komga On Deck", "nl": "Komga Verder lezen", "de": "Komga Als nächstes" },
   "height": 1,
   "devices": {
     "type": "app",
@@ -10,24 +10,24 @@
     {
       "id": "layout",
       "type": "dropdown",
-      "label": { "en": "Layout" },
+      "label": { "en": "Layout", "nl": "Indeling", "de": "Layout" },
       "value": "text",
       "values": [
-        { "id": "text",           "label": { "en": "Text only" } },
-        { "id": "thumbnail-text", "label": { "en": "Cover & text" } },
-        { "id": "thumbnail",      "label": { "en": "Covers only" } }
+        { "id": "text",           "label": { "en": "Text only",    "nl": "Alleen tekst",    "de": "Nur Text" } },
+        { "id": "thumbnail-text", "label": { "en": "Cover & text", "nl": "Omslag & tekst",  "de": "Cover & Text" } },
+        { "id": "thumbnail",      "label": { "en": "Covers only",  "nl": "Alleen omslagen", "de": "Nur Cover" } }
       ]
     },
     {
       "id": "showTitle",
       "type": "checkbox",
-      "label": { "en": "Show title" },
+      "label": { "en": "Show title", "nl": "Titel tonen", "de": "Titel anzeigen" },
       "value": true
     },
     {
       "id": "count",
       "type": "number",
-      "label": { "en": "Number of items" },
+      "label": { "en": "Number of items", "nl": "Aantal items", "de": "Anzahl der Einträge" },
       "value": 5,
       "min": 1,
       "max": 20,

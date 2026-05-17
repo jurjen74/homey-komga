@@ -10,7 +10,9 @@
   },
   "brandColor": "#005ed3",
   "description": {
-    "en": "Automate your digital comic and manga collection."
+    "en": "Automate your digital comic and manga collection.",
+    "nl": "Automatiseer je digitale strip- en manga-collectie.",
+    "de": "Automatisiere deine digitale Comic- und Manga-Sammlung."
   },
   "category": ["video"],
   "permissions": [],
@@ -22,5 +24,21 @@
   "author": {
     "name":  "Jurjen Ladenius",
     "email": "jurjen@ladenius.net"
+  },
+  "support": "https://github.com/jurjen74/homey-komga/issues",
+  "bugs": {
+    "url": "https://github.com/jurjen74/homey-komga/issues"
+  },
+  "source": "https://github.com/jurjen74/homey-komga",
+  "homeyCommunityTopicId": 154696,
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "aessedai@ladenius.net"
+      }
+    }
   }
 }
+
+
+

@@ -1,7 +1,7 @@
 {
   "type": "number",
-  "title": { "en": "Series" },
-  "units": { "en": "series" },
+  "title": { "en": "Series", "nl": "Series", "de": "Serien" },
+  "units": { "en": "series", "nl": "series", "de": "Serien" },
   "decimals": 0,
   "min": 0,
   "getable": true,

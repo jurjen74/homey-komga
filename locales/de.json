@@ -1,0 +1,56 @@
+{
+  "widgets": {
+    "komga_recent": {
+      "title": "Kürzlich hinzugefügt",
+      "no_items": "Keine neuen Einträge"
+    },
+    "komga_ondeck": {
+      "title": "Als nächstes lesen",
+      "no_items": "Nichts zum Weiterlesen"
+    },
+    "komga_popular": {
+      "title": "Beliebt bei anderen",
+      "no_items": "Noch keine Leseaktivität"
+    }
+  },
+  "pair": {
+    "server": {
+      "title": "Mit Komga verbinden",
+      "subtitle": "Gib die Details deines Komga-Servers ein, um fortzufahren",
+      "label_host": "Host-URL",
+      "placeholder_host": "http://192.168.1.10:25600",
+      "hint_host": "Inkl. Port — Komga verwendet standardmäßig 25600",
+      "label_username": "Benutzername",
+      "placeholder_username": "admin@komga.org",
+      "label_password": "Passwort",
+      "placeholder_password": "Dein Komga-Passwort",
+      "btn_test": "Verbindung testen",
+      "btn_testing": "Teste…",
+      "btn_next": "Weiter",
+      "error_host_required": "Host-URL ist erforderlich",
+      "error_username_required": "Benutzername ist erforderlich",
+      "error_password_required": "Passwort ist erforderlich",
+      "error_connection_failed": "Verbindung fehlgeschlagen",
+      "success_connected": "Mit Komga verbunden als __email__"
+    },
+    "user": {
+      "title": "Komga-Benutzer hinzufügen",
+      "subtitle": "Gib Anmeldedaten ein, um die Leseaktivität zu verfolgen",
+      "label_host": "Host-URL",
+      "placeholder_host": "http://192.168.1.10:25600",
+      "hint_host": "Gleicher Host wie dein Komga-Server-Gerät",
+      "label_username": "Benutzername",
+      "placeholder_username": "benutzer@komga.org",
+      "label_password": "Passwort",
+      "placeholder_password": "Passwort des Benutzers",
+      "btn_test": "Verbindung testen",
+      "btn_testing": "Teste…",
+      "btn_next": "Weiter",
+      "error_host_required": "Host-URL ist erforderlich",
+      "error_username_required": "Benutzername ist erforderlich",
+      "error_password_required": "Passwort ist erforderlich",
+      "error_connection_failed": "Verbindung fehlgeschlagen",
+      "success_connected": "Verbunden als __email__"
+    }
+  }
+}

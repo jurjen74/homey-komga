@@ -1,7 +1,7 @@
 {
   "type": "number",
-  "title": { "en": "Unread" },
-  "units": { "en": "books" },
+  "title": { "en": "Unread", "nl": "Ongelezen", "de": "Ungelesen" },
+  "units": { "en": "books", "nl": "boeken", "de": "Bücher" },
   "decimals": 0,
   "min": 0,
   "getable": true,

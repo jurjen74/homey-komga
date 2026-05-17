@@ -14,11 +14,11 @@
   ],
   "capabilitiesOptions": {
     "alarm_generic": {
-      "title":              { "en": "Status" },
-      "titleTrue":          { "en": "Komga is offline" },
-      "titleFalse":         { "en": "Online" },
-      "insightsTitleTrue":  { "en": "Komga went offline" },
-      "insightsTitleFalse": { "en": "Komga is online" }
+      "title":              { "en": "Status",              "nl": "Status",                    "de": "Status" },
+      "titleTrue":          { "en": "Komga is offline",    "nl": "Komga is offline",           "de": "Komga ist offline" },
+      "titleFalse":         { "en": "Online",              "nl": "Online",                    "de": "Online" },
+      "insightsTitleTrue":  { "en": "Komga went offline",  "nl": "Komga is offline gegaan",   "de": "Komga ist offline gegangen" },
+      "insightsTitleFalse": { "en": "Komga is online",     "nl": "Komga is online",            "de": "Komga ist online" }
     }
   },
   "pair": [
@@ -27,9 +27,9 @@
     { "id": "add_devices",  "template": "add_devices" }
   ],
   "settings": [
-    { "id": "host",         "type": "text",     "label": { "en": "Host URL" },               "value": "" },
-    { "id": "username",     "type": "text",     "label": { "en": "Username" },               "value": "" },
-    { "id": "password",     "type": "password", "label": { "en": "Password" },               "value": "" },
-    { "id": "pollInterval", "type": "number",   "label": { "en": "Poll interval (seconds)" }, "value": 60, "min": 15, "max": 3600 }
+    { "id": "host",         "type": "text",     "label": { "en": "Host URL",               "nl": "Host-URL",                    "de": "Host-URL" },                    "value": "" },
+    { "id": "username",     "type": "text",     "label": { "en": "Username",               "nl": "Gebruikersnaam",               "de": "Benutzername" },               "value": "" },
+    { "id": "password",     "type": "password", "label": { "en": "Password",               "nl": "Wachtwoord",                  "de": "Passwort" },                   "value": "" },
+    { "id": "pollInterval", "type": "number",   "label": { "en": "Poll interval (seconds)", "nl": "Pollinginterval (seconden)",   "de": "Abfrageintervall (Sekunden)" }, "value": 60, "min": 15, "max": 3600 }
   ]
 }
