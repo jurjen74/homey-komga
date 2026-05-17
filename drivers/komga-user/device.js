@@ -79,8 +79,8 @@ class KomgaUserDevice extends Homey.Device {
 
   async _updateReadingActivity() {
     const [inProgressPage, readPage] = await Promise.all([
-      this._client.getBooks({ size: 50, read_status: 'IN_PROGRESS', sort: 'lastModifiedDate,desc' }),
-      this._client.getBooks({ size: 50, read_status: 'READ',        sort: 'lastModifiedDate,desc' }),
+      this._client.getBooks({ size: 20, read_status: 'IN_PROGRESS', sort: 'lastModifiedDate,desc' }),
+      this._client.getBooks({ size: 20, read_status: 'READ',        sort: 'lastModifiedDate,desc' }),
     ]);
 
     const inProgressBooks = inProgressPage.content || [];

@@ -28,7 +28,7 @@ module.exports = {
 
     // Collect activity books from every user device
     const allActivity = (await Promise.all(
-      userDevices.map((d) => d.getActivityBooks(50).catch(() => [])),
+      userDevices.map((d) => d.getActivityBooks(20).catch(() => [])),
     )).flat();
 
     // Aggregate: count how many distinct users have touched each book

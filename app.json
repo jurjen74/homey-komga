@@ -416,7 +416,8 @@
       "brandColor": "#005ed3",
       "images": {
         "small": "/drivers/komga-server/assets/images/small.png",
-        "large": "/drivers/komga-server/assets/images/large.png"
+        "large": "/drivers/komga-server/assets/images/large.png",
+        "xlarge": "/drivers/komga-server/assets/images/xlarge.png"
       },
       "capabilities": [
         "alarm_generic",
@@ -507,7 +508,8 @@
       "brandColor": "#005ed3",
       "images": {
         "small": "/drivers/komga-user/assets/images/small.png",
-        "large": "/drivers/komga-user/assets/images/large.png"
+        "large": "/drivers/komga-user/assets/images/large.png",
+        "xlarge": "/drivers/komga-user/assets/images/xlarge.png"
       },
       "capabilities": [
         "komga_unread_count",

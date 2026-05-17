@@ -101,23 +101,34 @@ class KomgaServerDevice extends Homey.Device {
   }
 
   async _updateRecentBooks() {
-    const page           = await this._client.getBooks({ size: 50 });
-    const books          = page.content || [];
-    this._cachedRecentBooks = books;
+    const page  = await this._client.getBooks({ size: 20 });
+    const books = page.content || [];
 
-    const currentIds = new Set(books.map((b) => b.id));
+    // Slim down immediately — only keep what change detection and the widget need
+    const slim = books.map((b) => ({
+      id:       b.id,
+      libraryId: b.libraryId,
+      title:    b.metadata?.title || b.name || '',
+      subtitle: b.seriesTitle || '',
+      badge:    b.metadata?.number != null ? `#${b.metadata.number}` : '',
+      date:     b.created || '',
+    }));
+
+    this._cachedRecentBooks = slim;
+
+    const currentIds = new Set(slim.map((b) => b.id));
 
     if (this._knownBookIds === null) {
       this._knownBookIds = currentIds;
       return;
     }
 
-    for (const book of books) {
+    for (const book of slim) {
       if (!this._knownBookIds.has(book.id)) {
         const lib = this._cachedLibraries.find((l) => l.id === book.libraryId);
         this.driver.triggerBookAdded(this, {
-          title:   book.metadata?.title || book.name || '',
-          series:  book.seriesTitle || '',
+          title:   book.title,
+          series:  book.subtitle,
           library: lib?.name || '',
         });
       }
@@ -126,7 +137,7 @@ class KomgaServerDevice extends Homey.Device {
   }
 
   async _updateRecentSeries() {
-    const page   = await this._client.getSeries({ size: 50 });
+    const page   = await this._client.getSeries({ size: 20 });
     const series = page.content || [];
 
     const currentIds = new Set(series.map((s) => s.id));
@@ -173,18 +184,10 @@ class KomgaServerDevice extends Homey.Device {
   // --- Widget helpers ---
 
   async getRecentItems(count = 5) {
-    const books = this._cachedRecentBooks.slice(0, count);
-    return Promise.all(books.map(async (book) => {
-      const posterUrl = await this.fetchBookThumbnailDataUrl(book.id);
-      const num       = book.metadata?.number;
-      return {
-        title:    book.metadata?.title || book.name || '',
-        subtitle: book.seriesTitle || '',
-        badge:    num != null ? `#${num}` : '',
-        date:     book.created || '',
-        posterUrl,
-      };
-    }));
+    return Promise.all(this._cachedRecentBooks.slice(0, count).map(async (book) => ({
+      ...book,
+      posterUrl: await this.fetchBookThumbnailDataUrl(book.id),
+    })));
   }
 
   async fetchBookThumbnailDataUrl(bookId) {
