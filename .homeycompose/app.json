@@ -1,10 +1,12 @@
 {
   "id": "net.ladenius.komga",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "compatibility": ">=12.4.0",
   "sdk": 3,
   "runtime": "nodejs",
-  "platforms": ["local"],
+  "platforms": [
+    "local"
+  ],
   "name": {
     "en": "Komga"
   },
@@ -14,15 +16,17 @@
     "nl": "Automatiseer je digitale strip- en manga-collectie.",
     "de": "Automatisiere deine digitale Comic- und Manga-Sammlung."
   },
-  "category": ["video"],
+  "category": [
+    "video"
+  ],
   "permissions": [],
   "images": {
-    "small":  "/assets/images/small.png",
-    "large":  "/assets/images/large.png",
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
     "xlarge": "/assets/images/xlarge.png"
   },
   "author": {
-    "name":  "Jurjen Ladenius",
+    "name": "Jurjen Ladenius",
     "email": "jurjen@ladenius.net"
   },
   "support": "https://github.com/jurjen74/homey-komga/issues",
@@ -39,6 +43,3 @@
     }
   }
 }
-
-
-
