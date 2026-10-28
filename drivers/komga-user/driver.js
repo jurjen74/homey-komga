@@ -1,13 +1,13 @@
 'use strict';
 
-const Homey       = require('homey');
+const Homey = require('homey');
 const KomgaClient = require('../../lib/KomgaClient');
 
 class KomgaUserDriver extends Homey.Driver {
 
   async onInit() {
-    this._triggerBookStarted    = this.homey.flow.getDeviceTriggerCard('book_started');
-    this._triggerBookFinished   = this.homey.flow.getDeviceTriggerCard('book_finished');
+    this._triggerBookStarted = this.homey.flow.getDeviceTriggerCard('book_started');
+    this._triggerBookFinished = this.homey.flow.getDeviceTriggerCard('book_finished');
     this._triggerSeriesFinished = this.homey.flow.getDeviceTriggerCard('series_finished');
 
     this.homey.flow
@@ -25,14 +25,14 @@ class KomgaUserDriver extends Homey.Driver {
     let host = '';
     let username = '';
     let password = '';
-    let me       = null;
+    let me = null;
 
     session.setHandler('test_connection', async ({ host: rawHost, username: rawUser, password: rawPass }) => {
-      host     = rawHost.trim().replace(/\/$/, '');
+      host = rawHost.trim().replace(/\/$/, '');
       username = rawUser.trim();
       password = rawPass;
 
-      if (!host)     throw new Error('Host URL is required');
+      if (!host) throw new Error('Host URL is required');
       if (!username) throw new Error('Username is required');
       if (!password) throw new Error('Password is required');
 
@@ -48,9 +48,11 @@ class KomgaUserDriver extends Homey.Driver {
       }
       const email = me.email || username;
       return [{
-        name:     email,
-        data:     { id: `${host}::${email}` },
-        settings: { host, username, password, pollInterval: 60 },
+        name: email,
+        data: { id: `${host}::${email}` },
+        settings: {
+          host, username, password, pollInterval: 60,
+        },
       }];
     });
   }

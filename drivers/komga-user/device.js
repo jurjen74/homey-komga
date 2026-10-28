@@ -1,6 +1,6 @@
 'use strict';
 
-const Homey       = require('homey');
+const Homey = require('homey');
 const KomgaClient = require('../../lib/KomgaClient');
 
 const MS_PER_SECOND = 1000;
@@ -8,12 +8,12 @@ const MS_PER_SECOND = 1000;
 class KomgaUserDevice extends Homey.Device {
 
   async onInit() {
-    this._client    = this._buildClient();
+    this._client = this._buildClient();
     this._pollTimer = null;
 
     // null = first poll, populate silently without triggering
     this._knownInProgressIds = null;
-    this._knownReadIds       = null;
+    this._knownReadIds = null;
 
     await this.driver.ready();
     this._startPolling();
@@ -36,7 +36,7 @@ class KomgaUserDevice extends Homey.Device {
 
   _startPolling() {
     const intervalSec = this.getSetting('pollInterval') || 60;
-    this._poll();
+    this._poll().catch((err) => this.error('Poll failed:', err.message));
     this._pollTimer = this.homey.setInterval(() => this._poll(), intervalSec * MS_PER_SECOND);
   }
 
@@ -68,37 +68,37 @@ class KomgaUserDevice extends Homey.Device {
 
   async _updateCounts() {
     const [unreadPage, ondeckPage, inProgressPage] = await Promise.all([
-      this._client.getBooks({ size: 1, read_status: 'UNREAD' }),
+      this._client.getBooks({ size: 1, readStatus: 'UNREAD' }),
       this._client.getOnDeckBooks(1),
-      this._client.getBooks({ size: 1, read_status: 'IN_PROGRESS' }),
+      this._client.getBooks({ size: 1, readStatus: 'IN_PROGRESS' }),
     ]);
-    await this.setCapabilityValue('komga_unread_count',       unreadPage.totalElements     || 0);
-    await this.setCapabilityValue('komga_ondeck_count',       ondeckPage.totalElements     || 0);
-    await this.setCapabilityValue('komga_in_progress_count',  inProgressPage.totalElements || 0);
+    await this.setCapabilityValue('komga_unread_count', unreadPage.totalElements || 0);
+    await this.setCapabilityValue('komga_ondeck_count', ondeckPage.totalElements || 0);
+    await this.setCapabilityValue('komga_in_progress_count', inProgressPage.totalElements || 0);
   }
 
   async _updateReadingActivity() {
     const [inProgressPage, readPage] = await Promise.all([
-      this._client.getBooks({ size: 20, read_status: 'IN_PROGRESS', sort: 'lastModifiedDate,desc' }),
-      this._client.getBooks({ size: 20, read_status: 'READ',        sort: 'lastModifiedDate,desc' }),
+      this._client.getBooks({ size: 20, readStatus: 'IN_PROGRESS', sort: 'lastModifiedDate,desc' }),
+      this._client.getBooks({ size: 20, readStatus: 'READ', sort: 'lastModifiedDate,desc' }),
     ]);
 
     const inProgressBooks = inProgressPage.content || [];
-    const readBooks       = readPage.content       || [];
+    const readBooks = readPage.content || [];
 
     const currentInProgressIds = new Set(inProgressBooks.map((b) => b.id));
-    const currentReadIds       = new Set(readBooks.map((b) => b.id));
+    const currentReadIds = new Set(readBooks.map((b) => b.id));
 
     if (this._knownInProgressIds === null) {
       // First poll — populate silently
       this._knownInProgressIds = currentInProgressIds;
-      this._knownReadIds       = currentReadIds;
+      this._knownReadIds = currentReadIds;
       return;
     }
 
     const serverDriver = this._getServerDriver();
     const serverDevice = this._getServerDevice(serverDriver);
-    const user         = this.getSetting('username') || '';
+    const user = this.getSetting('username') || '';
 
     // Detect newly started books (appeared in IN_PROGRESS, not previously seen as read)
     for (const book of inProgressBooks) {
@@ -112,7 +112,7 @@ class KomgaUserDevice extends Homey.Device {
     // Detect newly finished books
     for (const book of readBooks) {
       if (!this._knownReadIds.has(book.id)) {
-        const title  = book.metadata?.title || book.name || '';
+        const title = book.metadata?.title || book.name || '';
         const series = book.seriesTitle || '';
 
         this.driver.triggerBookFinished(this, { title, series });
@@ -120,25 +120,23 @@ class KomgaUserDevice extends Homey.Device {
 
         // Check whether the entire series is now complete for this user
         if (book.seriesId) {
-          this._checkSeriesFinished(book.seriesId).catch((err) =>
-            this.error('Series check failed:', err.message),
-          );
+          this._checkSeriesFinished(book.seriesId).catch((err) => this.error('Series check failed:', err.message));
         }
       }
     }
 
     this._knownInProgressIds = currentInProgressIds;
-    this._knownReadIds       = currentReadIds;
+    this._knownReadIds = currentReadIds;
   }
 
   async _checkSeriesFinished(seriesId) {
     const seriesData = await this._client.getSeriesById(seriesId);
     // booksUnreadCount and booksInProgressCount are user-scoped fields returned by Komga
-    const unread     = seriesData.booksUnreadCount     ?? seriesData.booksMetadata?.booksUnreadCount ?? 1;
+    const unread = seriesData.booksUnreadCount ?? seriesData.booksMetadata?.booksUnreadCount ?? 1;
     const inProgress = seriesData.booksInProgressCount ?? 1;
     if (seriesData.booksCount > 0 && unread === 0 && inProgress === 0) {
       const tokens = {
-        series:     seriesData.metadata?.title || seriesData.name || '',
+        series: seriesData.metadata?.title || seriesData.name || '',
         book_count: seriesData.booksCount || 0,
       };
       this.driver.triggerSeriesFinished(this, tokens);
@@ -170,7 +168,7 @@ class KomgaUserDevice extends Homey.Device {
   // --- Widget helpers ---
 
   async getOnDeckItems(count = 5) {
-    const page  = await this._client.getOnDeckBooks(count);
+    const page = await this._client.getOnDeckBooks(count);
     const books = page.content || [];
     return Promise.all(books.map(async (book) => {
       let posterUrl = '';
@@ -179,15 +177,15 @@ class KomgaUserDevice extends Homey.Device {
         posterUrl = `data:image/jpeg;base64,${buf.toString('base64')}`;
       } catch { /* no thumbnail */ }
 
-      const pg    = book.readProgress?.page || 0;
+      const pg = book.readProgress?.page || 0;
       const total = book.pagesCount || 1;
-      const pct   = Math.round((pg / total) * 100);
+      const pct = Math.round((pg / total) * 100);
 
       return {
-        title:    book.metadata?.title || book.name || '',
+        title: book.metadata?.title || book.name || '',
         subtitle: book.seriesTitle || '',
-        badge:    `${pct}%`,
-        date:     book.readProgress?.lastModified || '',
+        badge: `${pct}%`,
+        date: book.readProgress?.lastModified || '',
         posterUrl,
       };
     }));
@@ -197,27 +195,27 @@ class KomgaUserDevice extends Homey.Device {
   async getActivityBooks(count = 20) {
     const half = Math.ceil(count / 2);
     const [inProgressPage, readPage] = await Promise.all([
-      this._client.getBooks({ size: half, read_status: 'IN_PROGRESS', sort: 'lastModifiedDate,desc' }),
-      this._client.getBooks({ size: half, read_status: 'READ',        sort: 'lastModifiedDate,desc' }),
+      this._client.getBooks({ size: half, readStatus: 'IN_PROGRESS', sort: 'lastModifiedDate,desc' }),
+      this._client.getBooks({ size: half, readStatus: 'READ', sort: 'lastModifiedDate,desc' }),
     ]);
 
     const result = [];
     for (const book of (inProgressPage.content || [])) {
       result.push({
-        id:           book.id,
-        title:        book.metadata?.title || book.name || '',
-        series:       book.seriesTitle || '',
+        id: book.id,
+        title: book.metadata?.title || book.name || '',
+        series: book.seriesTitle || '',
         lastActivity: book.readProgress?.lastModified || book.lastModifiedDate || '',
-        status:       'in_progress',
+        status: 'in_progress',
       });
     }
     for (const book of (readPage.content || [])) {
       result.push({
-        id:           book.id,
-        title:        book.metadata?.title || book.name || '',
-        series:       book.seriesTitle || '',
+        id: book.id,
+        title: book.metadata?.title || book.name || '',
+        series: book.seriesTitle || '',
         lastActivity: book.readProgress?.readDate || book.lastModifiedDate || '',
-        status:       'read',
+        status: 'read',
       });
     }
     return result;
