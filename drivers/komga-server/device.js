@@ -1,6 +1,6 @@
 'use strict';
 
-const Homey       = require('homey');
+const Homey = require('homey');
 const KomgaClient = require('../../lib/KomgaClient');
 
 const MS_PER_SECOND = 1000;
@@ -8,14 +8,14 @@ const MS_PER_SECOND = 1000;
 class KomgaServerDevice extends Homey.Device {
 
   async onInit() {
-    this._client    = this._buildClient();
+    this._client = this._buildClient();
     this._pollTimer = null;
 
-    this._wasAvailable    = null;   // null = first poll not yet done
-    this._knownBookIds    = null;   // null = first poll, populate silently
-    this._knownSeriesIds  = null;
+    this._wasAvailable = null; // null = first poll not yet done
+    this._knownBookIds = null; // null = first poll, populate silently
+    this._knownSeriesIds = null;
     this._cachedLibraries = [];
-    this._cachedRecentBooks = [];   // for widget
+    this._cachedRecentBooks = []; // for widget
 
     await this.driver.ready();
     this._startPolling();
@@ -38,7 +38,7 @@ class KomgaServerDevice extends Homey.Device {
 
   _startPolling() {
     const intervalSec = this.getSetting('pollInterval') || 60;
-    this._poll();
+    this._poll().catch((err) => this.error('Poll failed:', err.message));
     this._pollTimer = this.homey.setInterval(() => this._poll(), intervalSec * MS_PER_SECOND);
   }
 
@@ -91,27 +91,27 @@ class KomgaServerDevice extends Homey.Device {
       this._client.getBooks({ size: 1 }),
       this._client.getSeries({ size: 1 }),
     ]);
-    await this.setCapabilityValue('komga_book_count',   booksPage.totalElements  || 0);
+    await this.setCapabilityValue('komga_book_count', booksPage.totalElements || 0);
     await this.setCapabilityValue('komga_series_count', seriesPage.totalElements || 0);
   }
 
   async _updateLibraries() {
-    const libs            = await this._client.getLibraries();
+    const libs = await this._client.getLibraries();
     this._cachedLibraries = Array.isArray(libs) ? libs : [];
   }
 
   async _updateRecentBooks() {
-    const page  = await this._client.getBooks({ size: 20 });
+    const page = await this._client.getBooks({ size: 20 });
     const books = page.content || [];
 
     // Slim down immediately — only keep what change detection and the widget need
     const slim = books.map((b) => ({
-      id:       b.id,
+      id: b.id,
       libraryId: b.libraryId,
-      title:    b.metadata?.title || b.name || '',
+      title: b.metadata?.title || b.name || '',
       subtitle: b.seriesTitle || '',
-      badge:    b.metadata?.number != null ? `#${b.metadata.number}` : '',
-      date:     b.created || '',
+      badge: b.metadata?.number != null ? `#${b.metadata.number}` : '',
+      date: b.created || '',
     }));
 
     this._cachedRecentBooks = slim;
@@ -127,8 +127,8 @@ class KomgaServerDevice extends Homey.Device {
       if (!this._knownBookIds.has(book.id)) {
         const lib = this._cachedLibraries.find((l) => l.id === book.libraryId);
         this.driver.triggerBookAdded(this, {
-          title:   book.title,
-          series:  book.subtitle,
+          title: book.title,
+          series: book.subtitle,
           library: lib?.name || '',
         });
       }
@@ -137,7 +137,7 @@ class KomgaServerDevice extends Homey.Device {
   }
 
   async _updateRecentSeries() {
-    const page   = await this._client.getSeries({ size: 20 });
+    const page = await this._client.getSeries({ size: 20 });
     const series = page.content || [];
 
     const currentIds = new Set(series.map((s) => s.id));
@@ -151,8 +151,8 @@ class KomgaServerDevice extends Homey.Device {
       if (!this._knownSeriesIds.has(s.id)) {
         const lib = this._cachedLibraries.find((l) => l.id === s.libraryId);
         this.driver.triggerSeriesAdded(this, {
-          title:      s.metadata?.title || s.name || '',
-          library:    lib?.name || '',
+          title: s.metadata?.title || s.name || '',
+          library: lib?.name || '',
           book_count: s.booksCount || 0,
         });
       }

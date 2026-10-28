@@ -12,9 +12,9 @@ function findDevice(homey, deviceId) {
 
 module.exports = {
   async getRecent({ homey, query }) {
-    const count    = Math.max(1, Math.min(20, parseInt(query.count, 10) || 5));
+    const count = Math.max(1, Math.min(20, parseInt(query.count, 10) || 5));
     const deviceId = query.deviceId || null;
-    const device   = findDevice(homey, deviceId);
+    const device = findDevice(homey, deviceId);
     if (!device) throw new Error('No Komga server device found');
     return device.getRecentItems(count);
   },

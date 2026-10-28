@@ -20,7 +20,7 @@ function findServerDevice(homey, deviceId) {
 
 module.exports = {
   async getPopular({ homey, query }) {
-    const count    = Math.max(1, Math.min(20, parseInt(query.count, 10) || 5));
+    const count = Math.max(1, Math.min(20, parseInt(query.count, 10) || 5));
     const deviceId = query.deviceId || null;
 
     const userDevices = findUserDevices(homey);
@@ -62,10 +62,10 @@ module.exports = {
         posterUrl = await serverDevice.fetchBookThumbnailDataUrl(item.id);
       }
       return {
-        title:    item.title,
+        title: item.title,
         subtitle: item.series,
-        badge:    item.readerCount === 1 ? '1 reader' : `${item.readerCount} readers`,
-        date:     item.lastActivity || '',
+        badge: item.readerCount === 1 ? '1 reader' : `${item.readerCount} readers`,
+        date: item.lastActivity || '',
         posterUrl,
       };
     }));
